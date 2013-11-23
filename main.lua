@@ -4,7 +4,7 @@ require("hex_tile")
 require("tri_card")
 require("tri_types")
 
-version_num = 0.04
+version_num = 0.05
 scrn_width = 1024
 scrn_height = 600
 -- Layout is four panes, main window on left with console in the bottom, stat and misc on right. 
