@@ -67,14 +67,10 @@ function Hex:containsPoint(x, y)
    shift_x_diff = math.abs(x - self.orig_x)
    shift_y_diff = math.abs(y - self.orig_y)
    extra = (self.width / 4)
-   NW = {x = extra, y = 0}
+
+   -- East and SouthEast corners of the hex
    E = {x = self.width, y = self.height / 2}
    SE = {x = self.width - extra, y = self.height}
-
-   if shift_x_diff <= (SE.x - NW.x) / 2 and shift_y_diff < (SE.y - NW.y) / 2 then
-      -- in the center square
-      return true
-   end
 
    -- Use SE, E and new Mouse
    mouse = {x = shift_x_diff + self.width / 2, y = shift_y_diff + self.height / 2}
@@ -82,7 +78,8 @@ function Hex:containsPoint(x, y)
    b = E.y - m * E.x
    y_hex = m * mouse.x + b
 
-   if (mouse.y < y_hex) then
+   -- Ya know... I'm not actually sure how this works anymore.
+   if (mouse.y < y_hex and shift_y_diff < (self.height / 2)) then
       -- click is under the line (representing edge of hex)
       -- Point is radial... or reflected... due to symmetry only need to check one point / line
       return true
