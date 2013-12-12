@@ -1,5 +1,5 @@
 Hex = {orig_x = 0, orig_y = 0, width = 104, height = 90, index = 0, color = {r = 220, g = 0, b = 0}, 
-       center = {r = 255, g = 255, b = 0}, tris = {}, revealed = false}
+       center = {r = 255, g = 255, b = 0}, tris = {}, revealed = false, hex_type = {}}
 
 function Hex:new(o)
    o = o or {}
@@ -54,10 +54,10 @@ function Hex:draw()
       for i = 1, #self.tris do
 	 self.tris[i]:draw()
       end
-      -- Draw Star
-      C = {x = self.width / 2, y = self.height / 2}
-      love.graphics.setColor(self.center.r, self.center.g, self.center.b)
-      love.graphics.circle("fill", C.x, C.y, 5)
+      
+      love.graphics.translate(self.width / 2, self.height / 2)
+      self.hex_type:draw()
+      love.graphics.translate(-self.width / 2, -self.height / 2)
    end
 
    love.graphics.pop()
@@ -98,7 +98,7 @@ function Hex:handleMouse(x, y, button)
 end
 
 function makeHex(o_x, o_y, w, h)
-   hex = Hex:new({orig_x = o_x, orig_y = o_y, width = w, height = h, tris = {}})
+   hex = Hex:new({orig_x = o_x, orig_y = o_y, width = w, height = h, tris = {}, hex_type = EmptySpace:new()})
    hex:initTris()
    return hex
 end

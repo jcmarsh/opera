@@ -1,13 +1,6 @@
 TODO List
 =====
 
-hex types: 
- * Star
- * Empty
- * Asteroid Cloud
- * Massize Black Hole
- * Nexus
-
 Player colors
 
 Movable items (stations / ships) vs permanent (planets / asteroids)
@@ -20,3 +13,5 @@ T-card
 Config files
  * Color pallete
  * Start positions
+
+Library?

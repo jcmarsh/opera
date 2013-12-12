@@ -1,10 +1,11 @@
 require("sim_window")
 require("console")
 require("hex_tile")
+require("hex_types")
 require("tri_card")
 require("tri_types")
 
-version_num = 0.05
+version_num = 0.06
 scrn_width = 1024
 scrn_height = 600
 -- Layout is four panes, main window on left with console in the bottom, stat and misc on right. 
@@ -60,22 +61,26 @@ function love.load()
    windows[main].actors[1].tris[3].actors[1] = Planet:new({})
    windows[main].actors[1].tris[3].actors[2] = Station:new({})
    windows[main].actors[1].tris[5].actors[1] = Ship:new({})
-   
+   windows[main].actors[1].hex_type = Star:new({})
+
    windows[main].actors[3].revealed = true
    windows[main].actors[3].tris[1].revealed = true
    windows[main].actors[3].tris[1].actors[1] = Planet:new({})
+   windows[main].actors[3].hex_type = AsteroidCloud:new({})
 
    windows[main].actors[5].revealed = true
    windows[main].actors[5].tris[5].revealed = true
    windows[main].actors[5].tris[5].actors[1] = Planet:new({})
    windows[main].actors[5].tris[5].actors[2] = Station:new({})
    windows[main].actors[5].tris[6].actors[1] = Ship:new({})
+   windows[main].actors[5].hex_type = MassiveBlackHole:new({})
 
    windows[main].actors[7].revealed = true
    windows[main].actors[7].tris[5].revealed = true
    windows[main].actors[7].tris[5].actors[1] = Planet:new({})
    windows[main].actors[7].tris[5].actors[2] = Station:new({})
    windows[main].actors[7].tris[6].actors[1] = Ship:new({})
+   windows[main].actors[7].hex_type = Nexus:new({})
 end
 
 function love.draw()
