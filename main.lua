@@ -5,7 +5,7 @@ require("hex_types")
 require("tri_card")
 require("tri_types")
 
-version_num = 0.07
+version_num = 0.08
 scrn_width = 1024
 scrn_height = 600
 -- Layout is four panes, main window on left with console in the bottom, stat and misc on right. 
@@ -48,6 +48,8 @@ function love.load()
 
    con = Console:new({lines = {"Welcome to Opera, Commander.", "Alpha Ver: " .. version_num}, width = windows[console].width, height = windows[console].height})
    windows[console].actors[1] = con
+
+   con:registerFunction("quit", love.event.quit)
 
    -- Make the hex map
    windows[main].actors = buildThreeLayer(windows[main].width / 2, windows[main].height / 2, hex_width, hex_height)

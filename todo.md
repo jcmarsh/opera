@@ -13,10 +13,9 @@ T-card
 Config files
  * Color pallete
  * Start positions
+(Could be done through the console's new functionality)
 
 Library?
 
 Console
- * Fix (Should display text as typed, only on last line)
- * add commands (calling functions)
- * add variable setting (setting table values)
+ * add variable setting (setting table values) (set function call?)
