@@ -1,4 +1,4 @@
-Console = {lines = {}, width = 100, height = 100, line_height = 12, margin = 3}
+Console = {lines = {}, width = 100, height = 100, line_height = 12, margin = 3, grab_keyboard = false, typed = "> "}
 
 function Console:new(o)
    o = o or {}
@@ -19,10 +19,15 @@ function Console:draw()
 end
 
 function Console:handleMouse(x, y, button)
-
+   self.grab_keyboard = true
 end
 
 function Console:println(line)
+   self:printsingle(line)
+   self:printsingle(self.typed)
+end
+
+function Console:printsingle(line)
    -- Need to truncate lines ... maybe
    num_lines = math.floor((self.height - (2 * self.margin)) / self.line_height) - 1
    if num_lines > #self.lines then -- Add line to the bottom
@@ -32,5 +37,14 @@ function Console:println(line)
 	 self.lines[i] = self.lines[i + 1]
       end
       self.lines[#self.lines] = line
+   end
+end
+
+function Console:processKey(key)
+   if key ~= "return" then
+      self.typed = self.typed .. key
+   else
+      -- Process command
+      self:printsingle("Input!")
    end
 end

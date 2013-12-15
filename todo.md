@@ -15,3 +15,8 @@ Config files
  * Start positions
 
 Library?
+
+Console
+ * Fix (Should display text as typed, only on last line)
+ * add commands (calling functions)
+ * add variable setting (setting table values)

@@ -5,7 +5,7 @@ require("hex_types")
 require("tri_card")
 require("tri_types")
 
-version_num = 0.06
+version_num = 0.07
 scrn_width = 1024
 scrn_height = 600
 -- Layout is four panes, main window on left with console in the bottom, stat and misc on right. 
@@ -27,6 +27,7 @@ console_height = 8 * 12 + 6;
 console_h_calc = scrn_height - console_height;
 
 main = 1; console = 2; detailed = 3; misc_4 = 4;
+con = {}
 
 -- other good options: (60, 52) (74, 64) (90, 78) (104, 90) (120, 104)
 hex_width = 104; hex_height = 90;
@@ -36,8 +37,8 @@ function setDetailed(a)
 end
 
 function love.load()
-   love.graphics.setMode(scrn_width, scrn_height, false, false, 0)
-   love.graphics.setCaption("Ver: " .. version_num) 
+   love.window.setMode(scrn_width, scrn_height, {fullscreen=false, vsync=false, fsaa=0})
+   love.window.setTitle("Ver: " .. version_num) 
 
    windows = {}
    windows[main] = Window:new({orig_x = 0, orig_y = 0, width = third_w_calc, height = console_h_calc, actors = {}})
@@ -99,6 +100,10 @@ function love.mousepressed(mouseX, mouseY, button)
 	 if windows[i]:containsPoint(mouseX, mouseY) then
 	    con:println("Mouse clicked in window: " .. i)
 	    windows[i]:handleMouse(mouseX, mouseY, button)
+	    -- Who grabs keyboard? There is probably a better way
+	    if i ~= console then
+	       con.grab_keyboard = false
+	    end
 	 end
       end
    end
@@ -111,65 +116,73 @@ space_pressed = false
 w_pressed, a_pressed, s_pressed, d_pressed = false
 up_pressed, left_pressed, down_pressed, right_pressed = false
 function love.keypressed(key, unicode)
-   -- exit the sim
-   if key == 'escape' or key == 'q' then
+   if con.grab_keyboard then
+
+   else
+      -- exit the sim
+      if key == 'escape' or key == 'q' then
       love.event.quit()
-   end
-   if key == ' ' then
-      space_pressed = true
-   end
-   if key == 'w' then
-      w_pressed = true
-   end
-   if key == 'a' then
-      a_pressed = true
-   end
-   if key == 's' then
-      s_pressed = true
-   end
-   if key == 'd' then
-      d_pressed = true
-   end
-   if key == 'up' then
-      up_pressed = true
-   end
-   if key == 'left' then
-      left_pressed = true
-   end
-   if key == 'down' then
-      down_pressed = true
-   end
-   if key == 'right' then
-      right_pressed = true
+      end
+      if key == ' ' then
+	 space_pressed = true
+      end
+      if key == 'w' then
+	 w_pressed = true
+      end
+      if key == 'a' then
+	 a_pressed = true
+      end
+      if key == 's' then
+	 s_pressed = true
+      end
+      if key == 'd' then
+	 d_pressed = true
+      end
+      if key == 'up' then
+	 up_pressed = true
+      end
+      if key == 'left' then
+	 left_pressed = true
+      end
+      if key == 'down' then
+	 down_pressed = true
+      end
+      if key == 'right' then
+	 right_pressed = true
+      end
    end
 end
 
 function love.keyreleased(key, unicode)
-   if key == ' ' then
-      space_pressed = false
-   end
-   if key == 'w' then
-      w_pressed = false
-   end
-   if key == 'a' then
-      a_pressed = false
-   end
-   if key == 's' then
-      s_pressed = false
-   end
-   if key == 'd' then
-      d_pressed = false
-   end
-   if key == 'up' then
-      up_pressed = false
-   end
-   if key == 'left' then
-      left_pressed = false
-   end
-   if key == 'down' then
-      down_pressed = false
-   end
-   if key == 'right' then
-      right_pressed = false
+   if con.grab_keyboard then
+      con:processKey(key)
+   else
+      if key == ' ' then
+	 space_pressed = false
+      end
+      if key == 'w' then
+	 w_pressed = false
+      end
+      if key == 'a' then
+	 a_pressed = false
+      end
+      if key == 's' then
+	 s_pressed = false
+      end
+      if key == 'd' then
+	 d_pressed = false
+      end
+      if key == 'up' then
+	 up_pressed = false
+      end
+      if key == 'left' then
+	 left_pressed = false
+      end
+      if key == 'down' then
+	 down_pressed = false
+      end
+      if key == 'right' then
+	 right_pressed = false
+      end
    end
 end
