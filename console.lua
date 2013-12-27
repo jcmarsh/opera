@@ -1,4 +1,4 @@
-Console = {displayed = {}, console = "> ", typed = "", functions = {}, width = 100, height = 100, line_height = 12, margin = 3, grab_keyboard = false}
+Console = {displayed = {}, console = "> ", typed = "", functions = {}, width = 100, height = 100, line_height = 12, margin = 3, grab_keyboard = true}
 
 function Console:new(o)
    o = o or {}
@@ -6,7 +6,7 @@ function Console:new(o)
    self.__index = self
    self:registerFunction("help", self.help)
    self:registerFunction("set", self.set)
-   self:registerFunction("test", self.test)
+   self:registerFunction("printT", self.printT)
    return o
 end
 
@@ -89,23 +89,35 @@ function Console:parseCmd(line)
 end
 
 function Console:set(args)
-   table = _G
+   local table = _G
+
    for i = 1, #args - 1, 1 do
-      table = table[args[i]]
+      table = Console.stepTable(table, args[i])
    end
    
    -- TODO: So.. this works but it doesn't update anything!
    table = tonumber(args[#args])
 end
 
-function Console:test(args)
-   table = _G
+function Console:printT(args)
+   local table = _G
 
-   self.printTable(table)
    for i = 1, #args, 1 do
-      table = table[args[i]]
-      self.printTable(table)
+      table = Console.stepTable(table, args[i])
+      Console.printTable(table)
    end
+end
+
+function Console.stepTable(start, arg)
+   local table = start
+
+   if tonumber(arg) == nil then -- arg is a string
+      table = table[arg]
+   else
+      table = table[tonumber(arg)] -- convert to number
+   end
+
+   return table
 end
 
 function Console.printTable(table)
