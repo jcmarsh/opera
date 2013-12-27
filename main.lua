@@ -4,8 +4,9 @@ require("hex_tile")
 require("hex_types")
 require("tri_card")
 require("tri_types")
+require("keyboard")
 
-version_num = 0.08
+version_num = 0.085
 scrn_width = 1024
 scrn_height = 600
 -- Layout is four panes, main window on left with console in the bottom, stat and misc on right. 
@@ -119,7 +120,7 @@ w_pressed, a_pressed, s_pressed, d_pressed = false
 up_pressed, left_pressed, down_pressed, right_pressed = false
 function love.keypressed(key, unicode)
    if con.grab_keyboard then
-
+      keyboard_pressed(key)
    else
       -- exit the sim
       if key == 'escape' or key == 'q' then
@@ -157,7 +158,7 @@ end
 
 function love.keyreleased(key, unicode)
    if con.grab_keyboard then
-      con:processKey(key)
+      con:processKey(keyboard_released(key))
    else
       if key == ' ' then
 	 space_pressed = false

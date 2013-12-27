@@ -6,6 +6,7 @@ function Console:new(o)
    self.__index = self
    self:registerFunction("help", self.help)
    self:registerFunction("set", self.set)
+   self:registerFunction("test", self.test)
    return o
 end
 
@@ -44,6 +45,9 @@ function Console:println(line)
 end
 
 function Console:processKey(key)
+   if key == nil then
+      return
+   end
    if key ~= "return" then
       self.typed = self.typed .. key
    else
@@ -73,7 +77,7 @@ end
 function Console:parseCmd(line)
    cmd = nil
    args = {}
-   for w in line:gmatch("%a+") do
+   for w in line:gmatch("%w+") do
       if cmd == nil then
 	 cmd = w
       else
@@ -85,13 +89,28 @@ function Console:parseCmd(line)
 end
 
 function Console:set(args)
-   print("test", args)
-
-   for i = 1, #args, 1 do
-      print("\t", args[i])
+   table = _G
+   for i = 1, #args - 1, 1 do
+      table = table[args[i]]
    end
+   
+   -- TODO: So.. this works but it doesn't update anything!
+   table = tonumber(args[#args])
+end
 
---   for key, value in pairs(_G[foo][bar]) do
---      print(key, value)
---   end
+function Console:test(args)
+   table = _G
+
+   self.printTable(table)
+   for i = 1, #args, 1 do
+      table = table[args[i]]
+      self.printTable(table)
+   end
+end
+
+function Console.printTable(table)
+   print(table)
+   for k, v in pairs(table) do
+      print("\t", k, "\t", v)
+   end
 end
