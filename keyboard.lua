@@ -18,8 +18,30 @@ function keyboard_pressed(key)
    end
 end
 
+shifted = {["`"] = "~",
+	   ["1"] = "!",
+	   ["2"] = "@",
+	   ["3"] = "#",
+	   ["4"] = "$",
+	   ["5"] = "%",
+	   ["6"] = "^",
+	   ["7"] = "&",
+	   ["8"] = "*",
+	   ["9"] = "(",
+	   ["0"] = ")",
+	   ["-"] = "_",
+	   ["="] = "+",
+	   ["["] = "{",
+	   ["]"] = "}",
+	   ["\\"] = "|",
+	   [";"] = ":",
+	   ["'"] = "\"",
+	   [","] = "<",
+	   ["."] = ">",
+	   ["/"] = "?"}	   
+
 -- Apply shift to keys
-function keyboard_released(key, unicode)
+function keyboard_released(key)
    if key == 'lshift' or key == 'rshift' then
       shift_pressed = false
       return
@@ -34,8 +56,13 @@ function keyboard_released(key, unicode)
    end
 
    if shift_pressed then
-      return key:upper()
+      if shifted[key] ~= nil then
+	 return shifted[key]
+      else
+	 return key:upper()
+      end
    else
       return key
    end
+
 end

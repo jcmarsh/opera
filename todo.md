@@ -20,8 +20,6 @@ Library?
 Console
  * add variable setting (setting table values) (set function call?)
  * Fix typing speed problem
- * Need backspace!
- * can't make any shift character other than uppercase letters (no !@#$%_)
 
 -----
 

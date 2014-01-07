@@ -49,16 +49,21 @@ function Console:processKey(key)
       return
    end
    if key ~= "return" then
-      self.typed = self.typed .. key
+      if key == "backspace" then
+	 self.typed = string.sub(self.typed, 1, -2)
+      else
+	 self.typed = self.typed .. key
+      end
    else
       -- Process command
+      self:println(self.console .. self.typed)
       cmd, args = self:parseCmd(self.typed)
-      if cmd == nil then -- blank line
-	 self:println(self.console)
+      if cmd == nil then
+	 -- blank line
+	 -- Do nothing
       elseif self.functions[cmd] == nil then
 	 self:println("No such function: " .. cmd)
       else
-	 self:println(self.console .. self.typed)
 	 self.functions[cmd](self, args)
       end
       self.typed = ""      
