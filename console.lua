@@ -82,7 +82,7 @@ end
 function Console:parseCmd(line)
    cmd = nil
    args = {}
-   for w in line:gmatch("%w+") do
+   for w in line:gmatch("[a-zA-Z0-9_]+") do
       if cmd == nil then
 	 cmd = w
       else
@@ -94,14 +94,17 @@ function Console:parseCmd(line)
 end
 
 function Console:set(args)
+   -- TODO: can top level values be set?
    local table = _G
+   prev = nil
 
    for i = 1, #args - 1, 1 do
+      prev = table
       table = Console.stepTable(table, args[i])
+      print("Pabs", table, args[i])
    end
-   
-   -- TODO: So.. this works but it doesn't update anything!
-   table = tonumber(args[#args])
+
+   prev[args[#args-1]] = tonumber(args[#args])
 end
 
 function Console:printT(args)

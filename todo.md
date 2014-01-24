@@ -18,7 +18,6 @@ Config files
 Library?
 
 Console
- * add variable setting (setting table values) (set function call?)
  * Fix typing speed problem
 
 -----

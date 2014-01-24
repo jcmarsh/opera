@@ -6,7 +6,7 @@ require("tri_card")
 require("tri_types")
 require("keyboard")
 
-version_num = 0.0885
+version_num = 0.08875
 scrn_width = 1024
 scrn_height = 600
 -- Layout is four panes, main window on left with console in the bottom, stat and misc on right. 
@@ -65,7 +65,7 @@ function love.load()
    windows[main].actors[1].tris[3].actors[1] = Planet:new({})
    windows[main].actors[1].tris[3].actors[2] = Station:new({})
    windows[main].actors[1].tris[5].actors[1] = Ship:new({})
-   windows[main].actors[1].hex_type = Star:new({})
+   windows[main].actors[1].hex_type = Star:new({color = {r = 255, g = 255, b = 255}})
 
    windows[main].actors[3].revealed = true
    windows[main].actors[3].tris[1].revealed = true
