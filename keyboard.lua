@@ -18,6 +18,11 @@ function keyboard_pressed(key)
    end
 end
 
+-- Pablo pointed out that this is an easy way to make keyboard shortcuts.
+controlled = {["q"] = "quit",
+	      ["p"] = "printT",
+	      ["s"] = "set"}
+
 shifted = {["`"] = "~",
 	   ["1"] = "!",
 	   ["2"] = "@",
@@ -61,8 +66,11 @@ function keyboard_released(key)
       else
 	 return key:upper()
       end
+   elseif ctrl_pressed then
+      if controlled[key] ~= nil then
+	 return controlled[key]
+      end
    else
       return key
    end
-
 end

@@ -107,6 +107,10 @@ end
 function Console:printT(args)
    local table = _G
 
+   if #args < 1 then
+      Console.printTable(table)
+   end
+
    for i = 1, #args, 1 do
       table = Console.stepTable(table, args[i])
       Console.printTable(table)
@@ -127,7 +131,11 @@ end
 
 function Console.printTable(table)
    print(table)
-   for k, v in pairs(table) do
-      print("\t", k, "\t", v)
+   if type(table) == "table" then
+      for k, v in pairs(table) do
+	 print("\t", k, "\t", v)
+      end
+   else
+      print("\tValue", table)
    end
 end
